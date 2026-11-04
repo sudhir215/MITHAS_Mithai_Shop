@@ -12,6 +12,19 @@ const products=[
 {id:4,name:"Rasgulla",price:440,desc:"Light, spongy and delicately sweet",tag:"Light & lovely",img:"https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=1200&q=85"},
 {id:5,name:"Kesar Jalebi",price:380,desc:"Crisp saffron spirals, fresh from the kadai",tag:"Fresh daily",img:"/assets/kesharjalebi.jpg"},
 {id:6,name:"Milk Barfi",price:540,desc:"Rich milk sweet finished with pistachio",tag:"Classic",img:"https://images.unsplash.com/photo-1589119908995-c6837fa14848?auto=format&fit=crop&w=1200&q=85"}];
+const heroSlides = [
+  "/assets/image1.jpg",
+  "/assets/image2.jpg",
+  "/assets/image3.jpg",
+  "/assets/image4.jpg",
+  "/assets/image5.jpg",
+  "/assets/image6.jpg",
+  "/assets/image7.jpg",
+  "/assets/image8.jpg",
+  "/assets/image9.jpg",
+  "/assets/image10.jpg",
+];
+
 const money=n=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(n);
 
 function Header({count,onCart}){
@@ -38,6 +51,14 @@ function Cart({open,onClose,cart,qty,remove,checkout}){
 function Footer(){return <footer id="contact" className="bg-[#241916] px-5 py-14 text-white md:px-8"><div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-3"><div><p className="font-display text-3xl">MITHAS</p><p className="mt-3 max-w-sm text-sm leading-7 text-white/55">A little sweetness for life's most meaningful moments.</p></div><div><h4 className="font-bold text-[#f2d38d]">Get in touch</h4><p className="mt-4 flex gap-2 text-sm text-white/65"><Phone size={16}/> +91 98765 43210</p><p className="mt-3 flex gap-2 text-sm text-white/65"><MapPin size={16}/> Kolhapur, Maharashtra</p></div><div><h4 className="font-bold text-[#f2d38d]">Explore</h4><div className="mt-4 flex flex-col gap-3 text-sm text-white/65"><Link to="/">Home</Link><Link to="/story">Our story</Link><a href="/#mithai">Our mithai</a></div></div></div><div className="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-6 text-center text-xs text-white/40">© {new Date().getFullYear()} MITHAS. Made with care in Kolhapur.</div></footer>}
 
 function Home({add}){
+  const [heroSlide,setHeroSlide]=useState(0);
+
+  useEffect(()=>{
+    const timer=setInterval(()=>{
+      setHeroSlide(current=>(current+1)%heroSlides.length);
+    },3000);
+    return ()=>clearInterval(timer);
+  },[]);
  const [searchQuery,setSearchQuery]=useState("");
  const normalizedSearch=searchQuery.trim().toLowerCase();
  const filteredProducts=products.filter(p=>
@@ -46,7 +67,18 @@ function Home({add}){
  return <main>
  <section className="relative isolate overflow-hidden bg-[radial-gradient(circle_at_80%_20%,#f3dfb5_0,transparent_35%),linear-gradient(135deg,#fffaf0,#f8edda_55%,#fffaf0)] px-5 pb-24 pt-32 md:px-8 md:pb-32 md:pt-40"><div className="pointer-events-none absolute -left-28 top-36 h-72 w-72 rounded-full bg-rose-100/60 blur-3xl"/><div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[.92fr_1.08fr]">
  <motion.div initial={{opacity:0,y:35}} animate={{opacity:1,y:0}} transition={{duration:.8}}><span className="inline-flex items-center gap-2 rounded-full border border-[#d9bd85] bg-white/70 px-4 py-2 text-[11px] font-bold uppercase tracking-[.2em] text-maroon"><Sparkles size={14}/> A little joy in every bite</span><h1 className="mt-7 max-w-2xl font-display text-6xl font-semibold leading-[1.02] text-[#30231e] sm:text-7xl lg:text-[5.7rem]">Made with love.<br/><em className="text-maroon">Remembered</em><br/>with every bite.</h1><p className="mt-7 max-w-lg text-base leading-8 text-stone-600 md:text-lg">Discover timeless Indian sweets, crafted with care and made to make ordinary moments feel special.</p><div className="mt-9 flex flex-wrap gap-4"><a href="#mithai" className="group inline-flex items-center gap-3 rounded-full bg-maroon px-7 py-4 text-sm font-bold text-white shadow-xl transition hover:-translate-y-1">Explore our mithai <ArrowRight size={17}/></a><Link to="/story" className="rounded-full border border-stone-300 bg-white/60 px-7 py-4 text-sm font-bold">Our story</Link></div><div className="mt-12 flex flex-wrap gap-8 border-t border-[#ddcdb2] pt-7"><div><b className="font-display text-3xl text-maroon">Made fresh</b><p className="text-xs uppercase tracking-widest text-stone-500">Every day</p></div><div><b className="font-display text-3xl text-maroon">Pure joy</b><p className="text-xs uppercase tracking-widest text-stone-500">In every box</p></div><div><b className="font-display text-3xl text-maroon">Since 1985*</b><p className="text-xs uppercase tracking-widest text-stone-500">Family tradition</p></div></div></motion.div>
- <motion.div initial={{opacity:0,scale:.92}} animate={{opacity:1,scale:1}} transition={{duration:1,delay:.15}} className="relative mx-auto w-full max-w-2xl"><div className="absolute -inset-5 rounded-[3rem] border border-[#d5b879]/60"/><div className="shine-wrap relative h-[430px] overflow-hidden rounded-[2.5rem] shadow-soft sm:h-[560px]"><img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=1600&q=90" alt="Assorted Indian sweets" className="h-full w-full object-cover"/><div className="absolute inset-0 bg-gradient-to-t from-[#2d160f]/55 to-transparent"/><div className="absolute bottom-8 left-8 text-white"><p className="text-xs font-bold uppercase tracking-[.25em] text-[#f7d98e]">The art of mithai</p><p className="mt-2 font-display text-3xl sm:text-4xl">Sweet moments, beautifully made.</p></div></div><motion.div animate={{y:[0,-10,0]}} transition={{duration:4,repeat:Infinity}} className="absolute -left-4 top-10 rounded-2xl bg-white/95 p-4 shadow-xl sm:-left-10"><div className="flex items-center gap-2 text-sm font-bold"><Star size={17} className="fill-gold text-gold"/> Crafted with care</div><p className="mt-1 text-xs text-stone-500">A tradition worth sharing</p></motion.div><motion.div animate={{y:[0,9,0]}} transition={{duration:4.5,repeat:Infinity}} className="absolute -bottom-5 right-4 rounded-2xl bg-maroon px-5 py-4 text-white shadow-xl sm:-right-7"><p className="text-xs uppercase tracking-widest text-[#f4d89c]">Make it a celebration</p><p className="mt-1 font-display text-xl">Gift a little happiness</p></motion.div></motion.div>
+ <motion.div initial={{opacity:0,scale:.92}} animate={{opacity:1,scale:1}} transition={{duration:1,delay:.15}} className="relative mx-auto w-full max-w-2xl"><div className="absolute -inset-5 rounded-[3rem] border border-[#d5b879]/60"/><div className="shine-wrap relative h-[430px] overflow-hidden rounded-[2.5rem] shadow-soft sm:h-[560px]"><AnimatePresence mode="wait">
+  <motion.img
+    key={heroSlides[heroSlide]}
+    src={heroSlides[heroSlide]}
+    alt={`MITHAS sweets ${heroSlide + 1}`}
+    initial={{opacity:0,scale:1.03}}
+    animate={{opacity:1,scale:1}}
+    exit={{opacity:0}}
+    transition={{duration:0.7}}
+    className="absolute inset-0 h-full w-full object-cover"
+  />
+</AnimatePresence><div className="absolute inset-0 bg-gradient-to-t from-[#2d160f]/55 to-transparent"/><div className="absolute bottom-8 left-8 text-white"><p className="text-xs font-bold uppercase tracking-[.25em] text-[#f7d98e]">The art of mithai</p><p className="mt-2 font-display text-3xl sm:text-4xl">Sweet moments, beautifully made.</p></div></div><motion.div animate={{y:[0,-10,0]}} transition={{duration:4,repeat:Infinity}} className="absolute -left-4 top-10 rounded-2xl bg-white/95 p-4 shadow-xl sm:-left-10"><div className="flex items-center gap-2 text-sm font-bold"><Star size={17} className="fill-gold text-gold"/> Crafted with care</div><p className="mt-1 text-xs text-stone-500">A tradition worth sharing</p></motion.div><motion.div animate={{y:[0,9,0]}} transition={{duration:4.5,repeat:Infinity}} className="absolute -bottom-5 right-4 rounded-2xl bg-maroon px-5 py-4 text-white shadow-xl sm:-right-7"><p className="text-xs uppercase tracking-widest text-[#f4d89c]">Make it a celebration</p><p className="mt-1 font-display text-xl">Gift a little happiness</p></motion.div></motion.div>
  </div></section>
  <section id="mithai" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-24 md:px-8"><motion.div initial={{opacity:0,y:25}} whileInView={{opacity:1,y:0}} viewport={{once:true}} className="mb-14 text-center"><span className="text-xs font-bold uppercase tracking-[.3em] text-gold">Handpicked favourites</span><h2 className="mt-3 font-display text-4xl font-semibold sm:text-5xl">A box full of <em className="text-maroon">happiness</em></h2><p className="mx-auto mt-4 max-w-xl text-stone-500">Explore the classics that bring everyone together. Choose your favourites and build your own sweet box.</p></motion.div>
  <div className="mx-auto mb-10 max-w-xl">
